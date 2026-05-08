@@ -61,7 +61,7 @@
             <li><?= $collage["name"] ?>カレッジ
               <ul>
                 <?php foreach ($collage["courses"] as $course):?>
-                  <li><? $course["name"]= ?>コース(<?= $course["short_name"]?>)</li>
+                  <li><? $course["name"] ?>コース(<?= $course["short_name"]?>)</li>
                 <?php endforeach ?>
               </ul>
             </li>

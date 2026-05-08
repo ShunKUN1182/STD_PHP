@@ -1,10 +1,13 @@
 <?php
-  //クッキーの保存
-  setcookie("sample03","WD2A",time() + 60);
+  // $classes = json_decode(filter_input(INPUT_COOKIE,"sample03-1"));
+  // // cookieの読み込みがNULLの場合は、$classesに空配列を保存する
+  // if (!$classes) {
+  //   $classes = ["中身がないようです、、、"];
+  // };
 
-  // 配列をJSONデータへ変換する
-  $data = json_encode(["WD1A","WD2A","WD3A"]);
-  setcookie("sample03-1",$data,time() + 60);
+  // NULL合体演算子
+  $classes = json_decode(filter_input(INPUT_COOKIE,"sample03-1")) ?? ["中身、あれへんで"];
+
 ?>
 
 <!DOCTYPE html>
@@ -17,8 +20,13 @@
 <body>
   <h1>テンプレですけどなにか？</h1>
   <h2>クッキーの読み込み</h2>
-  <pre>
-    <?php var_dump($_COOKIE) ?>
-  </pre>
+  <p><a href="sample03-2.php">sample03-2へ進む</a></p>
+  <ul>
+    <?php foreach ($classes as $class):?>
+      <li>
+        <?= $class ?>
+      </li>
+    <?php endforeach ?>
+  </ul>
 </body>
 </html>
