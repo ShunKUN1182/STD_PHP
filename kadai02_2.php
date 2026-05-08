@@ -31,7 +31,7 @@
   if ($dataChake) {
     $data[] = $selectProduct["id"];
     $data = json_encode($data);
-    setcookie("php1_kadai02",$data,time()+60);
+    setcookie("php1_kadai02",$data,time()+180);
   };
 ?>
 <!DOCTYPE html>
