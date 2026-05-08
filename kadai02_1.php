@@ -9,8 +9,6 @@
       };
     endforeach;
   endforeach;
-
-  var_dump($cookieProducts)
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -58,21 +56,21 @@
     <h2 class="text-xl border-b-2 border-pink-400 pb-2 mb-10">閲覧したクッキー</h2>
     <div class="product-wrap flex overflow-x-scroll mb-20">
     
-      <div class="flex-shrink-0 w-full lg:w-1/6 h-72 bg-gray-50 border rounded-md shadow hover:shadow-lg mr-20 mb-20">
-        <a href="" class="flex flex-col w-full h-full p-2">
-          <h3 class="order-2 flex-grow font-bold my-5">クッキーの名前</h3>
-          <figure class="order-1 h-3/5 overflow-hidden">
-            <img src="" class="w-full">
-          </figure>
-          <p class="order-3 text-pink-400 text-sm">¥000</p>
-        </a>
-      </div>
-    
-    </div>
+      <?php foreach ($cookieProducts as $cookieProduct):?>
+        <div class="flex-shrink-0 w-full lg:w-1/6 h-72 bg-gray-50 border rounded-md shadow hover:shadow-lg mr-20 mb-20">
+          <a href="kadai02_2.php?product_id=<?= $cookieProduct["id"] ?>" class="flex flex-col w-full h-full p-2">
+            <h3 class="order-2 flex-grow font-bold my-5"><?= $cookieProduct["name"] ?></h3>
+            <figure class="order-1 h-3/5 overflow-hidden">
+              <img src="images/<?= $cookieProduct["thumbnail"]["small"] ?>" class="w-full">
+            </figure>
+            <p class="order-3 text-pink-400 text-sm">¥<?= $cookieProduct["price"] ?></p>
+          </a>
+        </div>
+      <?php endforeach ?>
 
+    </div>
   </div><!--/.container-->
 </main>
-
 </div><!--/.wrapper-->
 </body>
 </html>

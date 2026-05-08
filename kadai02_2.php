@@ -2,17 +2,37 @@
   require_once __DIR__ . "/kadai02_resource.php";
   $productId = filter_input(INPUT_GET,"product_id",FILTER_VALIDATE_INT);
 
-  $selectProduct = [];
+  $selectProduct = [
+    "id" => null,
+    "name" => "お探しの商品は見当たりませんでした",
+    "price" => 0,
+    "description" => "もう一度検索し直してください",
+    "thumbnail" => [
+      "large" => "",
+      "small" => ""
+    ],
+  ];
   foreach($products as $product):
-    if ($product["id"] == $productId) {
-      $selectProduct = $product;
-    };
+    if ($product["id"] !== $productId) {
+      continue;
+    }
+    $selectProduct = $product;
+    break;
   endforeach;
 
-  $data = json_decode(filter_input(INPUT_COOKIE,"php1_kadai02"));
-  $data[] = $selectProduct["id"];
-  $data = json_encode($data);
-  setcookie("php1_kadai02",$data,time()+60);
+  $data = json_decode(filter_input(INPUT_COOKIE,"php1_kadai02")) ?? [];
+  $dataChake = true;
+  foreach($data as $d):
+    if ($d == $productId) {
+      $dataChake = false;
+      break;
+    }
+  endforeach;
+  if ($dataChake) {
+    $data[] = $selectProduct["id"];
+    $data = json_encode($data);
+    setcookie("php1_kadai02",$data,time()+60);
+  };
 ?>
 <!DOCTYPE html>
 <html lang="ja">
