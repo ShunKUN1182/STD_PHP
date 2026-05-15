@@ -6,6 +6,7 @@
     foreach($products as $product):
       if ($cookie == $product["id"]) {
         $cookieProducts[] = $product;
+        break;
       };
     endforeach;
   endforeach;

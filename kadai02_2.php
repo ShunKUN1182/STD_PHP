@@ -9,7 +9,7 @@
     "description" => "もう一度検索し直してください",
     "thumbnail" => [
       "large" => "",
-      "small" => ""
+      "small" => "",
     ],
   ];
   foreach($products as $product):
@@ -21,17 +21,17 @@
   endforeach;
 
   $data = json_decode(filter_input(INPUT_COOKIE,"php1_kadai02")) ?? [];
-  $dataChake = true;
+  $flag = true;
   foreach($data as $d):
     if ($d == $productId) {
-      $dataChake = false;
+      $flag = false;
       break;
     }
   endforeach;
-  if ($dataChake) {
+  if ($flag) {
     $data[] = $selectProduct["id"];
     $data = json_encode($data);
-    setcookie("php1_kadai02",$data,time()+180);
+    setcookie("php1_kadai02",$data,time()+10000000);
   };
 ?>
 <!DOCTYPE html>
