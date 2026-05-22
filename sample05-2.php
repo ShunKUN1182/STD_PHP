@@ -13,13 +13,31 @@ session_start();
 
 // ログイン認証処理
 if(empty($_SESSION["username"])){
-  $testPassword = "password";
-  $hashPassword = password_hash($testPassword,PASSWORD_DEFAULT);
+
+$users = [
+  ["username"=> "user01","password" => password_hash("123qwe",PASSWORD_DEFAULT)],
+  ["username"=> "user02","password" => password_hash("initpass",PASSWORD_DEFAULT)],
+  ["username"=> "user03","password" => password_hash("password",PASSWORD_DEFAULT)],
+];
+
+  // $testPassword = "password";
+  // $hashPassword = password_hash($testPassword,PASSWORD_DEFAULT);
   $username = filter_input(INPUT_POST,"username");
   $password = filter_input(INPUT_POST,"password");
-
-  if (password_verify($password,$hashPassword)) {
-    // 入力したパスワードと暗号化したパスワードが一致した時
+  $hashPassword = null;
+  
+  foreach ($users as $user) {
+    if ($username == $user["username"]) {
+      $hashPassword = $user["password"];
+      break;
+    }
+  }
+  // if (!$hashPassword) {
+  //   header("Location:sample05-1.php");
+  //   exit;
+  // }
+  if ($hashPassword && password_verify($password,$hashPassword)) {
+    // ユーザー名が一致し、かつ入力したパスワードと暗号化したパスワードが一致した時
     $_SESSION["username"] = $username;
   } else {
     // ログインページへリダイレクト
