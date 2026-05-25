@@ -3,29 +3,31 @@ $products = [
   ["id" => 1, "name" => "ノートパソコン", "price" => 150000],
   ["id" => 2, "name" => "スマートフォン", "price" => 80000],
   ["id" => 3, "name" => "ワイヤレスイヤホン", "price" => 15000],
+  ["id" => 4, "name" => "カップラーメン", "price" => 250],
+  ["id" => 5, "name" => "MacBookPro", "price" => 300000],
 ];
 session_start();
-$newId = filter_input(INPUT_POST,"product_id");
-foreach ($cart as $c) {
-  if ($c == $newId) {
-    $c
-  }
-}
-$_SESSION["Ids"][] = $newId;
-$_SESSION["Ids"];
-if ($_SESSION["Ids"]) {
-  $Ids = $_SESSION["Ids"];
+if (isset($_SESSION["cart"])) {
+  $cart = $_SESSION["cart"];
 }else {
-  $_SESSION["Ids"] = [];
-};
-$newIds = array_count_values($Ids);
-var_dump($newIds);
-// var_dump($history);
-// foreach ($products as $product) {
-//   if ($product["id"] === $history) {
-//     $cart = $product;
-//   }
-// }
+  $cart = [];
+}
+$newId = filter_input(INPUT_POST,"product_id",FILTER_VALIDATE_INT);
+if (isset($_SESSION["cart"][$newId])) {
+  $_SESSION["cart"][$newId]++;;
+}else {
+  $_SESSION["cart"][$newId] = 1;
+}
+foreach($products as $product) {
+    $cart[] = $product;
+    var_dump($cart);
+}
+
+
+$_SESSION["cart"] = $cart;
+
+var_dump($cart);
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -45,7 +47,7 @@ var_dump($newIds);
       <?php foreach ($products as $product):?>
         <div>
           <h3><?= $product["name"] ?></h3>
-          <p><?= $product["price"] ?>&yen;</p>
+          <p>&yen;<?= $product["price"] ?></p>
           <form action="" method="post">
             <input type="hidden" name="product_id" value=<?= $product["id"] ?>>
             <button type="submit" name="add">カートに入れる</button>
@@ -69,19 +71,12 @@ var_dump($newIds);
       </thead>
 
       <tbody>
-        <?php foreach ($newIds as $newId):?>
-          <?php foreach ($products as $product):?>
-            <?php if($product["id"] == $newId): ?>
               <tr>
                   <td></td>
                   <td>&yen;</td>
                   <td></td>
                   <td>&yen;</td>
               </tr>
-            <?php endif ?>
-          <?php endforeach ?>
-        <?php endforeach ?>
-
       </tbody>
       <tfoot>
         <tr>
