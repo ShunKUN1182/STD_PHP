@@ -28,10 +28,10 @@
 <main>
   <div class="container w-full h-full mx-auto px-2 py-20">
     <h3 class="text-xl border-b-2 border-green-400 pb-2 mb-10">郵便番号で検索する</h3>
-    <form action="" method="">
+    <form action="kadai04_2.php" method="GET">
       <div class="flex flex-wrap flex-col md:flex-row py-10">
         <div class="w-full md:w-1/2 mr-5">
-          <input type="text" name="" id="zip" class="text-md w-full p-2 mb-2 border-2 border-gray-200 focus:border-green-200 rounded-md outline-none" maxlength="" value="">
+          <input type="text" name="zip" id="zip" class="text-md w-full p-2 mb-2 border-2 border-gray-200 focus:border-green-200 rounded-md outline-none" maxlength="" value="">
           <p class="text-sm">３桁以上の数字を入力してください</p>
         </div>
         <div class="mt-10 md:mt-0">

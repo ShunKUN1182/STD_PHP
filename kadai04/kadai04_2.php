@@ -1,7 +1,36 @@
 <?php
+  $zipNumber = filter_input(INPUT_GET, "zip");
+  $message = "";
 
+  try {
+    if(!$zipNumber) {
+      throw new Exception("郵便番号を入力してください");
+    }
+  } catch (Exception $e) {
+    $message = $e->getMessage();
+  }
 
+  // $zipNumber = str_pad($zipNumber, 7, '0', STR_PAD_RIGHT);
+  while(strlen((string)$zipNumber) <= 6){
+    $zipNumber .= "0";
+  }
+  $fp = fopen("../files/zip.csv", "r");
+  $zips = [];
+
+  while($row = fgets($fp)){
+    if (preg_split("/,/",$row)[0] == $zipNumber ) {
+      [$zip,$pref,$city,$town] = explode(",",$row);
+      $zips[] = [
+        "zip" => $zip,
+        "pref" => $pref,
+        "city" => $city,
+        "town" => $town,
+      ];
+    }
+  }
+  fclose($fp);
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -30,7 +59,7 @@
     <h3 class="text-xl border-b-2 border-green-400 pb-2 mb-10">検索の結果</h3>
     <div>
 
-    
+    <?php if($zips): ?>
       <table class="table-fixd w-full bg-white">
         <thead>
           <tr class="bg-green-100 h-12">
@@ -42,27 +71,29 @@
         </thead>
         <tbody>
           <tr class="h-24">
-            <td class="text-xl text-center border">〒</td>
-            <td class="text-xl text-center border">都道府県を表示</td>
-            <td class="text-xl text-center border">市区町村を表示</td>
-            <td class="text-xl text-center border">丁名を表示</td>
+            <td class="text-xl text-center border">〒<?= $zips[0]["zip"] ?></td>
+            <td class="text-xl text-center border">〒<?= $zips[0]["pref"] ?></td>
+            <td class="text-xl text-center border">〒<?= $zips[0]["city"] ?></td>
+            <td class="text-xl text-center border">〒<?= $zips[0]["town"] ?></td>
           </tr>
         </tbody>
       </table>
     
-      <?php // 検索エラーのHTML ?>
+      <?php else: ?>
       <div>
-        <p class="text-3xl font-bold">エラーメッセージの表示</p>
+        <p class="text-3xl font-bold">該当の郵便番号が見当たりませんでした。</p>
       </div>
-    
+      <?php endif ?>
+
 
       <div class="flex justify-center mt-10">
-        <a href="#" class="block w-40 h-10 text-white text-center leading-10 bg-gray-500 hover:bg-gray-400 rounded-md">検索へ戻る</a>
+        <a href="kadai04_1.php" class="block w-40 h-10 text-white text-center leading-10 bg-gray-500 hover:bg-gray-400 rounded-md">検索へ戻る</a>
       </div>
     </div>
 
   </div><!--/.container-->
 </main>
+
 
 </div><!--/.wrapper-->
 </body>
