@@ -21,7 +21,7 @@
   }
   // ファイルを閉じる
   fclose($fp);
-  var_dump($zips);
+  // var_dump($zips);
 ?>
 
 <!DOCTYPE html>
@@ -32,5 +32,27 @@
   <title>ファイルの読み込みや！</title>
 </head>
 <body>
+  <h1>郵便番号</h1>
+  <!-- <input type=""> -->
+  <table>
+    <thead>
+      <tr>
+        <th>郵便番号</th>
+        <th>都道府県</th>
+        <th>市区名</th>
+        <th>町名</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach($zips as $zip): ?>
+        <tr>
+          <td><?= $zip["zip"] ?></td>
+          <td><?= $zip["pref"] ?></td>
+          <td><?= $zip["city"] ?></td>
+          <td><?= $zip["town"] ?></td>
+        </tr>
+      <?php endforeach ?>
+    </tbody>
+  </table>
 </body>
 </html>
