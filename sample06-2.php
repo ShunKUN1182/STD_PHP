@@ -5,11 +5,23 @@
 
   // 行単位で文字列を取り出して、処理を行う
   // 次の行がない（EOF）に到達したら false
+  $zips = [];
   while($row = fgets($fp)){
-    var_dump($row);
+    if (preg_split("/,/",$row)[1] == "大阪府" ) {
+      // $zips[] = preg_split("/,/", $row);
+      // [$zip,$pref,$city,$town] = preg_split("/,/",$row);
+      [$zip,$pref,$city,$town] = explode(",",$row);
+      $zips[] = [
+        "zip" => $zip,
+        "pref" => $pref,
+        "city" => $city,
+        "town" => $town,
+      ];
+    }
   }
   // ファイルを閉じる
   fclose($fp);
+  var_dump($zips);
 ?>
 
 <!DOCTYPE html>
