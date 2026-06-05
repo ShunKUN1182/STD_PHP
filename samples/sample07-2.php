@@ -3,10 +3,18 @@
   var_dump($_FILES);
   // アップロードファイル情報
   $files = $_FILES["upfile"];
+  // ファイルをアップロードするフォルダがあるかチェック
+  // なければ、フォルダを生成する
+  if (!is_dir("../files/upload_images")) {
+    // フォルダの生成
+    mkdir("../files/upload_images");
+    // フォルダの権限設定
+    chmod("../files/upload_images",0777);
+  }
   // アップロードしたファイルのチェック
   if (is_uploaded_file($files["tmp_name"])) {
     // アップロードしたファイルを所定のフォルダへ移動
-    if (move_uploaded_file($files["tmp_name"],"../files/{$files["name"]}")) {
+    if (move_uploaded_file($files["tmp_name"],"../files/upload_images/{$files["name"]}")) {
       print "アップロード先に移動したで";
     }else {
       print "アップロード先に移動できんかった";
