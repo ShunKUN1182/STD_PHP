@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- link -->
-  <link href="asset/styles/style.css" rel="stylesheet">
+  <!-- <link href="../css/style.css" rel="stylesheet"> -->
 
   <!-- script -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -54,6 +54,6 @@
 </main>
 
 </div><!--/.wrapper-->
-<script src="asset/scripts/kadai05.js"></script>
+<script src="./kadai05.js"></script>
 </body>
 </html>

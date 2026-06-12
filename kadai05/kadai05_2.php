@@ -8,8 +8,7 @@ $extension = $extension[count($extension) - 1];
     $filename = base64_encode(random_bytes(15));
     $filename = str_replace(["=","+","/","."], "", $filename);
     $filename = substr($filename,0,15);
-    $filename .= ".";
-    $filename .= $extension;
+    $filename .= ".{$extension}";
     if (!is_dir("../files/storage")) {
       mkdir("../files/storage");
       chmod("../files/storage",0777);
