@@ -1,10 +1,42 @@
 <?php
-  // アップロードしたファイル情報
-  // var_dump($_FILES);
-  // アップロードファイル情報
-  $files = $_FILES["upfile"];
+// アップロードしたファイル情報
+// var_dump($_FILES);
+// アップロードファイル情報
+$files = $_FILES["upfile"];
+try {
+
   // アップロードしたファイルのチェック
+  switch($files["error"]) {
+    case UPLOAD_ERR_OK: break; // 0
+    case UPLOAD_ERR_INI_SIZE: //1
+    case UPLOAD_ERR_FORM_SIZE: 
+      $message = "ファイル容量がオーバー";
+      break; //2
+    case UPLOAD_ERR_PARTIAL://3
+    case UPLOAD_ERR_NO_FILE:
+      $message = "アップロード失敗";
+      break; //4
+    case UPLOAD_ERR_NO_TMP_DIR: // 6
+    case UPLOAD_ERR_CANT_WRITE: 
+      $message = "システム障害が発生している可能性";
+      break; //7
+    case UPLOAD_ERR_EXTENSION: 
+      $message = "拡張子が違います";
+      break; //8
+  }
+
+  // パターン2
+  // $message = match($files["tmp_name"]){
+  //   UPLOAD_ERR_INI_SIZE => "ファイル容量がオーバー",
+  //   UPLOAD_ERR_FORM_SIZE => "ファイル容量がオーバー",
+  // };
+  if ($files["error"]) {
+    throw new Exception( $message );
+  }
+
   if (is_uploaded_file($files["tmp_name"])) {
+    $files = $_FILES["upfile"];
+
     // 重複しないファイル名の生成(トークン生成)
     // ## ローテクバージョン
     // $filename = "";
@@ -55,7 +87,10 @@
   } else {
     print "不正なファイルやで！";
   }
-  
+}
+catch(Exception $error) {
+    print $error->getMessage();
+}
 ?>
 
 <!DOCTYPE html>

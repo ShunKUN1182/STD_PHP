@@ -1,6 +1,6 @@
 <?php
   //template
-  
+  print __DIR__;
 ?>
 
 <!DOCTYPE html>
