@@ -3,7 +3,7 @@
 require_once __DIR__ . "/config.php";
 
 try {
-  $city = "堺市";
+  $city = filter_input(INPUT_GET,"city") ?: "堺市";
   // DB接続
   $db = new PDO(DB_DSN,DB_USER,DB_PASS);
 
@@ -23,6 +23,17 @@ try {
   while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $result[] = $row;
   }
+
+  //大阪の市区町村を取り出す(グループ化)
+  $sql = "SELECT city FROM $table WHERE pref = '大阪府' GROUP BY city";
+
+  $stmt = $db->prepare($sql);
+  $stmt->execute();
+  $cities = array_column(
+    array: $stmt->fetchAll(PDO::FETCH_ASSOC),
+    column_key: "city"
+  );
+  // var_dump($cities);
   var_dump($result);
 }
 catch (PDOException $error) {
@@ -40,5 +51,20 @@ catch (PDOException $error) {
 <body>
   <h1>DB操作</h1>
   <h2>SELECT WHERE</h2>
+  <form action="" method="GET">
+    <select name="city">
+      <?php foreach ($cities as $city) : ?>
+        <option value="<?= $city ?>"><?= $city ?></option>
+      <?php endforeach ?>
+    </select>
+    <button type="submit">検索</button>
+  </form>
+  <div>
+    <ul>
+      <?php foreach ($result as $town) : ?>
+        <li><?= $town ?></li>
+      <?php endforeach ?>
+    </ul>
+  </div>
 </body>
 </html>
