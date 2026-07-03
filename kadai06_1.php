@@ -20,36 +20,36 @@ try {
     $categories[] = $row; 
   };
 
+    $queryParams = [];
+    $bindParams = [];
+
+  if ($name) {
+    $queryParams[] = "name LIKE ?";
+    $bindParams[] = $name;
+  }
+  if ($category) {
+    $queryParams[] = "category_id = ?";
+    $bindParams[] = $category;
+  }
+
+  $where = implode(" AND ", $queryParams);
+
+if ($where) {
+  $where = " WHERE " . $where;
+}
+
   //SQL
-  $sql = "SELECT * FROM $products_table";
+  $sql = "SELECT * FROM {$products_table} {$where}";
   
   // SQLでプリペアードステートメントの準備
   // プリペアードステートメントを使うことで、SQLインジェクション対策
   $stmt = $db->prepare($sql);
   // プリペアードステートメントから結果セットの生成
-  $stmt->execute();
+  $stmt->execute($bindParams);
   $result = [];
   // 結果セットからレコードの取り出し
   while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    if ($name) {
-      if ($category) {
-        if ($category == $row["category_id"]) {
-          if ($name == $row["name"]) {
-            $result[] = $row;
-          }
-        }
-      } else {
-          if ($name == $row["name"]) {
-            $result[] = $row;
-          }
-      }
-    } else if ($category) {
-      if ($category == $row["category_id"]) {
-        $result[] = $row;
-      }
-    }else {
-      $result[] = $row;
-    }
+    $result[] = $row;
   }
 }
 catch (PDOException $error) {
