@@ -21,11 +21,14 @@ try {
   $result = [];
   // 結果セットからレコードの取り出し
   while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    if (!$row["town"]) {
+      continue;
+    }
     $result[] = $row;
   }
 
   //大阪の市区町村を取り出す(グループ化)
-  $sql = "SELECT city FROM $table WHERE pref = '大阪府' GROUP BY city";
+  $sql = "SELECT city FROM {$table} WHERE pref = '大阪府' GROUP BY city";
 
   $stmt = $db->prepare($sql);
   $stmt->execute();
@@ -33,8 +36,6 @@ try {
     array: $stmt->fetchAll(PDO::FETCH_ASSOC),
     column_key: "city"
   );
-  // var_dump($cities);
-  var_dump($result);
 }
 catch (PDOException $error) {
   print $error->getMessage();
@@ -62,7 +63,7 @@ catch (PDOException $error) {
   <div>
     <ul>
       <?php foreach ($result as $town) : ?>
-        <li><?= $town ?></li>
+        <li><?=$town["town"] ?></li>
       <?php endforeach ?>
     </ul>
   </div>
