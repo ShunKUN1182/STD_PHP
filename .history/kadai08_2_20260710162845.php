@@ -10,16 +10,7 @@
   $request = filter_input_array(INPUT_POST,[
     "product_code" => FILTER_FLAG_NONE,
     "name" => FILTER_FLAG_NONE,
-    "price" => FILTER_VALIDATE_INT,
-    "category" => FILTER_VALIDATE_INT,
+    "price" => FILTER_VALIDATA,
   ]);
   var_dump($request);
-  try {
-
-  }catch(PDOException $error) {
-    print $error -> getMessage();
-
-  }catch(Exception $error) {
-    print $message = $error->getMessage();
-  }
 ?>

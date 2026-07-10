@@ -19,7 +19,5 @@
   }catch(PDOException $error) {
     print $error -> getMessage();
 
-  }catch(Exception $error) {
-    print $message = $error->getMessage();
-  }
+  }catch(Exception $error)
 ?>

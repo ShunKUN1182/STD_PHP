@@ -14,12 +14,4 @@
     "category" => FILTER_VALIDATE_INT,
   ]);
   var_dump($request);
-  try {
-
-  }catch(PDOException $error) {
-    print $error -> getMessage();
-
-  }catch(Exception $error) {
-    print $message = $error->getMessage();
-  }
 ?>

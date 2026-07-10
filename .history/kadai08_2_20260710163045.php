@@ -20,6 +20,6 @@
     print $error -> getMessage();
 
   }catch(Exception $error) {
-    print $message = $error->getMessage();
+    print $message = $error->getMessage()
   }
 ?>

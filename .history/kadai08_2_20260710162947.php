@@ -16,10 +16,7 @@
   var_dump($request);
   try {
 
-  }catch(PDOException $error) {
-    print $error -> getMessage();
+  }catch(PDOException) {
 
-  }catch(Exception $error) {
-    print $message = $error->getMessage();
   }
 ?>

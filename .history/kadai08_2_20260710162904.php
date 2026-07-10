@@ -11,15 +11,7 @@
     "product_code" => FILTER_FLAG_NONE,
     "name" => FILTER_FLAG_NONE,
     "price" => FILTER_VALIDATE_INT,
-    "category" => FILTER_VALIDATE_INT,
+    "category" => FILTER_VA
   ]);
   var_dump($request);
-  try {
-
-  }catch(PDOException $error) {
-    print $error -> getMessage();
-
-  }catch(Exception $error) {
-    print $message = $error->getMessage();
-  }
 ?>
