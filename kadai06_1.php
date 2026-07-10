@@ -143,7 +143,7 @@ catch (PDOException $error) {
                 <td class="h-10 px-6 py-5"><?= $item["name"] ?></td>
                 <td class="h-10 px-6 py-5"><?= $item["price"] ?></td>
                 <td class="h-10 text-center px-6 py-5">
-                  <a href="#" class="text-pink-600 hover:text-pink-400">詳細</a>
+                  <a href="kadai07_1.php?product_code=<?= $item["code"] ?>" class="text-pink-600 hover:text-pink-400">詳細</a>
                 </td>
               </tr>
             <?php endforeach ?>
