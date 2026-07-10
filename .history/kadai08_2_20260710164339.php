@@ -8,8 +8,8 @@
   }
 
   $request = filter_input_array(INPUT_POST,[
-    "product_code" => FILTER_FLAG_NONE,
-    "name" => FILTER_FLAG_NONE,
+    "product_code" => FILTER_DEFAULTR,
+    "name" => FILTER_DEFAULTR,
     "price" => FILTER_VALIDATE_INT,
     "category" => FILTER_VALIDATE_INT,
   ]);

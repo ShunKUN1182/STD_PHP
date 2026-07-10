@@ -23,7 +23,6 @@
     var_dump($stmt);
   }catch(PDOException $error) {
     print $error -> getMessage();
-    print $stmt->queryString;
   }catch(Exception $error) {
     print $message = $error->getMessage();
   }

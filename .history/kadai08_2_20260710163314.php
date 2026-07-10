@@ -17,13 +17,11 @@
   try {
     $db = new PDO(DB_DSN,DB_USER,DB_PASS);
     $table = TB_PRODUCTS;
-    $sql = "INSERT INTO {$table}(code,name,price,category_id) VALUES (?,?,?,?)";
-    $stmt = $db->prepare($sql);
-    $stmt->execute($request);
-    var_dump($stmt);
+    $sql = "INSERT INTO {$table}(code,name,price,ca)"
+
   }catch(PDOException $error) {
     print $error -> getMessage();
-    print $stmt->queryString;
+
   }catch(Exception $error) {
     print $message = $error->getMessage();
   }

@@ -20,10 +20,10 @@
     $sql = "INSERT INTO {$table}(code,name,price,category_id) VALUES (?,?,?,?)";
     $stmt = $db->prepare($sql);
     $stmt->execute($request);
-    var_dump($stmt);
+    var_dump($stmt)
   }catch(PDOException $error) {
     print $error -> getMessage();
-    print $stmt->queryString;
+
   }catch(Exception $error) {
     print $message = $error->getMessage();
   }

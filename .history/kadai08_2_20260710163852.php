@@ -17,7 +17,7 @@
   try {
     $db = new PDO(DB_DSN,DB_USER,DB_PASS);
     $table = TB_PRODUCTS;
-    $sql = "INSERT INTO {$table}(code,name,price,category_id) VALUES (?,?,?,?)";
+    $sql = "INSERT INTO {$table}(code,name,price,category_id) VALUES ";
     $stmt = $db->prepare($sql);
     $stmt->execute($request);
     var_dump($stmt);
