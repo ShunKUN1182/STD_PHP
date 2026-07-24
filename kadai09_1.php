@@ -1,5 +1,34 @@
 <?php
+require_once __DIR__ . "/utility.php";
 
+// [GET]product code
+$productCode = filter_input(INPUT_GET,"product_code",FILTER_VALIDATE_INT);
+
+if (
+  ! $productCode ||
+  ! preg_match("/^[0-9]+$/",$productCode)
+  ) {
+  redirect("kadai06_1.php");
+};
+
+$db = new PDO(DB_DSN,DB_USER,DB_PASS);
+$products_table = TB_PRODUCTS; 
+$sql = "SELECT * FROM $products_table WHERE code = $productCode";
+$stmt = $db-> prepare($sql);
+$stmt->execute();
+$productResult = $stmt->fetch(PDO::FETCH_ASSOC);
+$categoryCode = $productResult["category_id"];
+$category_table = TB_CATEGORIES; 
+$sql = "SELECT * FROM $category_table";
+$stmt = $db-> prepare($sql);
+$stmt->execute();
+$categoryResult = [];
+while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  if ($row["id"] == $categoryCode) {
+    $myCategory = $row["id"];
+  }
+  $categoryResult[] = $row;
+}
 
 ?>
 <!DOCTYPE html>
@@ -40,7 +69,7 @@
       <h4 class="font-bold mb-5">商品情報</h4>
 
       <form action="kadai09_2.php" method="POST">
-        <input type="hidden" name="product_code" value="">
+        <input type="hidden" name="product_code" value="<?= $productResult["code"] ?>">
         <input type="hidden" name="_method" value="PUT">
 
         <div class="flex flex-col md:flex-row mb-10">
@@ -48,7 +77,7 @@
             <div class="mb-5">
               <div class="flex flex-col w-6/12">
                 <label for="product_code" class="text-gray-500 text-left uppercase tracking-wider">code</label>
-                <p class="bg-white px-2 py-2 border rounded-md outline-none"></p>
+                <p class="bg-white px-2 py-2 border rounded-md outline-none"><?= $productResult["code"] ?></p>
               </div>
             </div>
 
@@ -57,13 +86,16 @@
                 <label for="category" class="text-gray-500 text-left uppercase tracking-wider">category</label>
                 <select name="category" class="bg-white px-2 py-2 border  rounded-md outline-none focus:border-green-200">
                 
+                <?php foreach($categoryResult as $category) : ?>
                   <option
-                    value=""
+                    value="<?= $category["id"] ?>"
                     
-                    selected
+                    <?php if($category["id"] == $myCategory) : ?>
+                      selected
+                    <?php endif ?>
                     
-                  >商品カテゴリー名</option>
-                
+                  ><?= $category["name"] ?></option>
+                <?php endforeach?>
                 </select>
               </div>
               <div class="flex flex-col w-4/12">
@@ -73,7 +105,7 @@
                   name="price"
                   id="price"
                   class="px-2 py-2 border rounded-md outline-none focus:border-green-200"
-                  value=""
+                  value="<?= $productResult["price"] ?>"
                 >
               </div>
             </div>
@@ -85,7 +117,7 @@
                 name="name"
                 id="name"
                 class="px-2 py-2 border rounded-md outline-none focus:border-green-200"
-                value=""
+                value="<?= $productResult["name"] ?>"
               >
             </div>
           </div>
