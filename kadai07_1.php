@@ -61,7 +61,7 @@ $categoryResult = $stmt->fetch(PDO::FETCH_ASSOC);
       </form>
       -->
       <!--/kadai09_1-->
-      <a href="#" class="text-white text-center leading-10 bg-pink-600 px-10 hover:bg-pink-500 rounded-md">編集する</a>
+      <a href="kadai09_1.php?product_code=<?= $productResult["code"] ?>" class="text-white text-center leading-10 bg-pink-600 px-10 hover:bg-pink-500 rounded-md">編集する</a>
     </div>
 
     

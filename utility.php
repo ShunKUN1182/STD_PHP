@@ -8,3 +8,8 @@ function headers(array $params): void {
     header("{$key}: {$param}");
   }
 };
+
+function redirect(string $dest):void {
+  header("Location: {$dest}");
+  exit;
+}
