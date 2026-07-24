@@ -19,7 +19,7 @@
     $table = TB_PRODUCTS;
     $sql = "INSERT INTO {$table}(code,name,price,category_id) VALUES (?,?,?,?)";
     $stmt = $db->prepare($sql);
-    $stmt->execute($request);
+    $stmt->execute(array_values($request));
     var_dump($stmt);
   }catch(PDOException $error) {
     print $error -> getMessage();
